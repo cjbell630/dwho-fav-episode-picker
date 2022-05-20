@@ -1,277 +1,541 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="initial-scale=1.0">
-<title>Picker</title>
-<style>
-body {
-    background:#FFF;
-    color:#000;
-    font-family:verdana, sans-serif;
-    font-size:10pt;
-    margin:0;
-    padding:10px;
-}
+    <head>
+        <meta name="viewport" content="initial-scale=1.0">
+        <title>Picker</title>
+        <style>
+            body {
+                background: #222222;
+                color: #FFFFFF;
+                font-family: verdana, sans-serif;
+                font-size: 10pt;
+                margin: 0;
+                padding: 10px;
+            }
 
-a:link, a:visited {
-    color:#008;
-    font-weight:bold;
-    text-decoration:none;
-}
+            a:link, a:visited {
+                color: #008;
+                font-weight: bold;
+                text-decoration: none;
+            }
 
-a:active, a:hover {
-    color:#ACF;
-}
+            a:active, a:hover {
+                color: #ACF;
+            }
 
-.info {
-    font-weight:bold;
-}
+            .info {
+                font-weight: bold;
+            }
 
-button {
-    font-family:inherit;
-    cursor:pointer;
-    border:0;
-    border-radius:3px;
-    padding:0.3em 0.5em;
-    background:#CCC;
-    color:#000;
-}
+            button {
+                font-family: inherit;
+                cursor: pointer;
+                border: 0;
+                border-radius: 3px;
+                padding: 0.3em 0.5em;
+                background: #CCC;
+                color: #000;
+            }
 
-button:hover {
-    background:#DDD;
-}
+            button:hover {
+                background: #DDD;
+            }
 
-button.disabled {
-    background:#DDD;
-    color:#888;
-    cursor:not-allowed;
-}
+            button.disabled {
+                background: #DDD;
+                color: #888;
+                cursor: not-allowed;
+            }
 
-button.disabled:hover {
-    background:#DDD;
-}
+            button.disabled:hover {
+                background: #DDD;
+            }
 
-#container {
-    position:relative;
-    margin-left:-10px;
-    margin-right:-10px;
-    padding:10px;
-    overflow:hidden;
-}
+            #container {
+                position: relative;
+                margin-left: -10px;
+                margin-right: -10px;
+                padding: 10px;
+                overflow: hidden;
+            }
 
-@media (min-width:1024px) {
-    /* Put the found favorites beside the picking div when the window is sufficiently large */
-    #picking {
-        float:left;
-        width:636px;
-    }
+            @media (min-width: 1024px) {
+                /* Put the found favorites beside the picking div when the window is sufficiently large */
+                #picking {
+                    float: left;
+                    width: 636px;
+                }
 
-    #secondary {
-        margin-left:646px;
-    }
-}
+                #secondary {
+                    margin-left: 646px;
+                }
+            }
 
-@media (min-width:1300px) {
-    /* Once we get to the point where 636px is less than half of the width of the screen, make the picking div just take up half */
-    #picking {
-        width:50%;
-    }
+            @media (min-width: 1300px) {
+                /* Once we get to the point where 636px is less than half of the width of the screen, make the picking div just take up half */
+                #picking {
+                    width: 50%;
+                }
 
-    #secondary {
-        margin-left:51%;
-    }
-}
+                #secondary {
+                    margin-left: 51%;
+                }
+            }
 
-#pick {
-    background:#58F;
-    color:#FFF;
-    font-size:larger;
-    font-weight:bold;
-    width:6em;
-    border-radius:5px;
-    margin-right:10px;
-}
+            #pick {
+                background: #58F;
+                color: #FFF;
+                font-size: larger;
+                font-weight: bold;
+                width: 6em;
+                border-radius: 5px;
+                margin-right: 10px;
+            }
 
-#pick.disabled {
-    background:#ACF;
-}
+            #pick.disabled {
+                background: #ACF;
+            }
 
-#pick:hover {
-    background:#ACF;
-}
+            #pick:hover {
+                background: #ACF;
+            }
 
-.item-list {
-    padding:0;
-    list-style-type:none;
-    line-height:100px;
-}
+            .item-list {
+                padding: 0;
+                list-style-type: none;
+                line-height: 100px;
+            }
 
-.item-list li {
-    margin:0;
-    display:inline-block;
-    height:100px;
-    width:100px;
-    line-height:100px;
-    border:3px solid transparent;
-    text-align:center;
-    position:relative;
-    vertical-align:top;
-    overflow:hidden;
-    border-radius:100%;
-    background:#F7F7F7;
-    color:#000;
-}
+            .item-list li {
+                margin: 0;
+                display: inline-block;
+                /* TODO make size relative to umber of elements being displayed */
+                height: 200px;
+                width: 200px;
+                line-height: 100px;
+                border: 3px solid transparent;
+                text-align: center;
+                position: relative;
+                vertical-align: top;
+                overflow: hidden;
+                border-radius: 100%;
+                background: #F7F7F7;
+                color: #000;
+            }
 
-.item-list li img {
-    vertical-align:middle;
-    max-height:100%;
-    max-width:100%;
-}
+            .item-list li img {
+                vertical-align: middle;
+                /* TODO if above TODO lines change, change below to fill circle */
+                height: 200px;
+            }
 
-.item-list li span {
-    display:inline-block;
-    vertical-align:middle;
-    line-height:1.2;
-}
+            .item-list li span {
+                display: inline-block;
+                vertical-align: middle;
+                line-height: 1.2;
+            }
 
-@media (max-width:636px) {
-    .item-list {
-        line-height:75px;
-    }
+            @media (max-width: 636px) {
+                .item-list {
+                    line-height: 75px;
+                }
 
-    .item-list li {
-        line-height:75px;
-        height:75px;
-        width:75px;
-    }
-}
+                .item-list li {
+                    line-height: 75px;
+                    height: 75px;
+                    width: 75px;
+                }
+            }
 
-@media (max-width:423px) {
-    .item-list {
-        line-height:50px;
-    }
+            @media (max-width: 423px) {
+                .item-list {
+                    line-height: 50px;
+                }
 
-    .item-list li {
-        line-height:50px;
-        height:50px;
-        width:50px;
-    }
-}
+                .item-list li {
+                    line-height: 50px;
+                    height: 50px;
+                    width: 50px;
+                }
+            }
 
-#evaluating li {
-    cursor:pointer;
-}
+            #evaluating li {
+                cursor: pointer;
+            }
 
-#favorites li {
-    cursor:move;
-}
+            #favorites li {
+                cursor: move;
+            }
 
-.item-list li:hover {
-    background:#CDF;
-}
+            .item-list li:hover {
+                background: #CDF;
+            }
 
-.item-list.sorting li:hover {
-    background:#F7F7F7;
-}
+            /* NOTE added */
+            .item-list li .title {
+                background: #CDF;
+                font-weight: bolder;
+                font-size: 150%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                visibility: hidden;
+                transform: translate(-50%, -50%);
+                padding:50%;
+                border-radius: 50%;
+                opacity: 75%;
+            }
 
-#evaluating li.selected {
-    border:3px solid #7AC;
-}
+            /* NOTE added */
+            .item-list li:hover .title {
+                visibility: visible;
+            }
 
-#evaluating, #buttons {
-    text-align:center;
-    margin:auto;
-}
+            .item-list.sorting li:hover {
+                background: #F7F7F7;
+            }
 
-#evaluating li.notice {
-    width:auto;
-    height:auto;
-    max-width:260px;
-    margin:auto;
-    background:#F7F7F7;
-    border-radius:10px;
-    padding:30px 30px;
-    color:#000;
-    text-align:center;
-    line-height:1.4;
-    cursor:auto;
-    font-size:10pt;
-}
+            #evaluating li.selected {
+                border: 3px solid #7AC;
+            }
 
-#buttons {
-    margin-top:30px;
-    position:relative;
-    z-index:3;
-}
-</style>
-</head>
-<body>
-<h1>Picker</h1>
+            #evaluating, #buttons {
+                text-align: center;
+                margin: auto;
+            }
 
-<p>You can include any content you want here.</p>
+            #evaluating li.notice {
+                width: auto;
+                height: auto;
+                max-width: 260px;
+                margin: auto;
+                background: #F7F7F7;
+                border-radius: 10px;
+                padding: 30px 30px;
+                color: #000;
+                text-align: center;
+                line-height: 1.4;
+                cursor: auto;
+                font-size: 10pt;
+            }
 
-<div id="container">
+            #buttons {
+                margin-top: 30px;
+                position: relative;
+                z-index: 3;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Picker</h1>
 
-<div id="picking">
-<ul id="evaluating" class="item-list">
-</ul>
+        <p>You can include any content you want here.</p>
 
-<p id="buttons"><button id="pick">Pick</button> <button id="pass">Pass</button> <button id="undo">Undo</button> <button id="redo">Redo</button></p>
-</div>
+        <div id="container">
 
-<div id="secondary">
-<h2>Found favorites</h2>
+            <div id="picking">
+                <ul id="evaluating" class="item-list">
+                </ul>
 
-<ol id="favorites" class="item-list">
-</ol>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="picker.js"></script>
-<script src="picker-ui.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
-<script>
-'use strict';
+                <p id="buttons">
+                    <button id="pick">Pick</button>
+                    <button id="pass">Pass</button>
+                    <button id="undo">Undo</button>
+                    <button id="redo">Redo</button>
+                </p>
+            </div>
 
-var items = [
-    // Define your items here
-];
+            <div id="secondary">
+                <h2>Found favorites</h2>
 
-var myPicker = new picker.Picker({
-    items: items
-});
+                <ol id="favorites" class="item-list">
+                </ol>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="picker.js"></script>
+        <script src="picker-ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
+        <script>
+            'use strict';
 
-var pickerUI = new PickerUI(myPicker, {
-    elements: {
-        pick: "#pick",
-        pass: "#pass",
-        undo: "#undo",
-        redo: "#redo",
-        evaluating: "#evaluating",
-        favorites: "#favorites"
-    }
-});
+            var items = [
+                /* SEASON 1 */
+                {
+                    id: "s01e01",
+                    name: "Rose",
+                    image: "https://m.media-amazon.com/images/M/MV5BMjI3NTk3MTQ4NV5BMl5BanBnXkFtZTgwNjk0NTMwMjE@._V1_.jpg"
+                },
+                {
+                    id: "s01e02",
+                    name: "The End of the World",
+                    image: "https://m.media-amazon.com/images/M/MV5BMjM1MDg0MjQ2OV5BMl5BanBnXkFtZTgwMTA1NTMwMjE@._V1_.jpg"
+                },
+                {
+                    id: "s01e03",
+                    name: "The Unquiet Dead",
+                    image: "https://www.planetclaire.tv/wp-content/uploads/2015/08/doctor-who-the-unquiet-dead_2.jpg"
+                },
+                {
+                    id: "s01e04+5",
+                    name: "Aliens of London / World War Three",
+                    image: "https://m.media-amazon.com/images/M/MV5BMTU1NTI2Mzk3M15BMl5BanBnXkFtZTgwMDA1NTMwMjE@._V1_.jpg"
+                },
+                {
+                    id: "s01e06",
+                    name: "Dalek",
+                    image: "https://m.media-amazon.com/images/M/MV5BZTUyOGI4ODktNjIwOS00NjQyLWFhMDktZTYzNjllNjI2ZDRkXkEyXkFqcGdeQXVyNzA5NTYxMDg@._V1_.jpg"
+                },
+                {id: "s01e07", name: "The Long Game", image: "https://ichef.bbci.co.uk/images/ic/976xn/p00r8kdn.jpg"},
+                {
+                    id: "s01e08",
+                    name: "Father's Day",
+                    image: "https://m.media-amazon.com/images/M/MV5BNDI4NDA3NjYtOTQ1Mi00ZDM5LTg4YmYtYzk5YWU4OTIzNDdiXkEyXkFqcGdeQXVyNzA5NTYxMDg@._V1_.jpg"
+                },
+                {
+                    id: "s01e09+10",
+                    name: "The Empty Child / The Doctor Dances",
+                    image: "https://images.immediate.co.uk/production/volatile/sites/3/2013/03/27892.jpg?quality=90&resize=620,413"
+                },
+                {
+                    id: "s01e11",
+                    name: "Boom Town",
+                    image: "https://www.planetclaire.tv/wp-content/uploads/2015/08/doctor-who-boom-town.jpg"
+                },
+                {
+                    id: "s01e12+13",
+                    name: "Bad Wolf / The Parting of Ways",
+                    image: "https://3.bp.blogspot.com/-KF4-OE1nF1g/WqlHvdkKRZI/AAAAAAAARQs/MRk3hNNyqus7_tncPDBgjMSdul_OOBquACLcBGAs/s1600/parting.jpg"
+                },
 
-pickerUI.initialize();
+                /* SEASON 2 */
+                {
+                    id: "s02e00",
+                    name: "The Christmas Invasion",
+                    image: "https://ichef.bbci.co.uk/images/ic/640x360/p08ztfp3.jpg"
+                },
+                {
+                    id: "s02e01",
+                    name: "New Earth",
+                    image: "https://m.media-amazon.com/images/M/MV5BNjMwMjExNjI4Nl5BMl5BanBnXkFtZTgwMzIxNDEzMjE@._V1_.jpg"
+                },
+                {
+                    id: "s02e02",
+                    name: "Tooth and Claw",
+                    image: "https://m.media-amazon.com/images/M/MV5BYmQyYzA4Y2YtZjBiMS00ZGI0LThhNzYtOThmYzQ3YThjOGZlXkEyXkFqcGdeQXVyNjMyMzczMzY@._V1_.jpg"
+                },
+                {
+                    id: "s02e03",
+                    name: "School Reunion",
+                    image: "https://m.media-amazon.com/images/M/MV5BMjE3NDgwNzIzOV5BMl5BanBnXkFtZTgwMDI1NTMwMjE@._V1_.jpg"
+                },
+                {
+                    id: "s02e04",
+                    name: "The Girl in the Fireplace",
+                    image: "https://images.immediate.co.uk/production/volatile/sites/3/2020/05/Doctor-Who-Fireplace-6230896.jpg?quality=90&resize=980,654"
+                },
+                {
+                    id: "s02e05+6",
+                    name: "Rise of the Cybermen / The Age of Steel",
+                    image: "https://thetimescales.com/xl_covers/679-new_tv_series-10893.jpg"
+                },
+                {
+                    id: "s02e07",
+                    name: "The Idiot's Lantern",
+                    image: "https://4.bp.blogspot.com/-sR9yjV8Wpgc/WrJJjyiWtcI/AAAAAAAARSc/IRxfTOKwyw4bjktyIbOxFxmf7vUfYi1XACLcBGAs/s1600/idiot.jpg"
+                },
+                {
+                    id: "s02e08+9",
+                    name: "The Impossible Planet / The Satan Pit",
+                    image: "https://static.wikia.nocookie.net/tardis/images/b/b9/The_Beast.jpg/revision/latest?cb=20070116215610"
+                },
+                {
+                    id: "s02e10",
+                    name: "Love & Monsters",
+                    image: "https://thecoolkat1995.files.wordpress.com/2019/05/doctor-who-love-and-monsters-6.jpg"
+                },
+                {
+                    id: "s02e11",
+                    name: "Fear Her",
+                    image: "http://images.amcnetworks.com/bbcamerica.com/wp-content/uploads/2015/11/DW_211.jpg"
+                },
+                {
+                    id: "s02e12+13",
+                    name: "Army of Ghosts / Doomsday",
+                    image: "https://static.wikia.nocookie.net/tardis/images/5/5c/Army_of_ghosts_main.jpg/revision/latest?cb=20120611235449"
+                },
 
-/* Sortable favorites - you can safely remove this, and the Sortable.min.js script, if you don't want to be able to sort your favorite list. */
-var sortable = new Sortable(pickerUI.elem.favorites.get(0), {
-    draggable: '.item',
-    animation: 100,
-    onStart: function() {
-        pickerUI.elem.favorites.addClass("sorting");
-    },
-    onEnd: function() {
-        pickerUI.elem.favorites.removeClass("sorting");
-    },
-    onUpdate: function() {
-        myPicker.setFavorites(pickerUI.elem.favorites.children().map(function() {
-            return pickerUI.getItem(this);
-        }).get());
-        pickerUI.update(true);
-    }
-});
-/* End sortable favorites */
-</script>
-</body>
+                /* SEASON 3 */
+                {
+                    id: "s03e00",
+                    name: "The Runaway Bride",
+                    image: "https://pm1.narvii.com/6611/8188836ec7a26134c0e47ccdcc5f35fc092cc2d1_hq.jpg"
+                },
+                {
+                    id: "s03e01",
+                    name: "Smith and Jones",
+                    image: "https://m.media-amazon.com/images/M/MV5BNmI3YWQ3YzgtYmExZC00ZTRkLWFhZDUtYzMyMTVhNDM3ZmNjXkEyXkFqcGdeQXVyNjMyMzczMzY@._V1_.jpg"
+                },
+                {
+                    id: "s03e02",
+                    name: "The Shakespeare Code",
+                    image: "https://m.media-amazon.com/images/M/MV5BMTUwMDg2OTY5MF5BMl5BanBnXkFtZTgwMjczNTMwMjE@._V1_.jpg"
+                },
+                {
+                    id: "s03e03",
+                    name: "Gridlock",
+                    image: "https://m.media-amazon.com/images/M/MV5BMjIyNzgxOTAxN15BMl5BanBnXkFtZTgwNjczNTMwMjE@._V1_.jpg"
+                },
+                {
+                    id: "s03e04+5",
+                    name: "Daleks in Manhattan / Evolution of the Daleks",
+                    image: "https://www.doctorwhotv.co.uk/wp-content/uploads/DaleksInManhattan-ten.jpg"
+                },
+                {
+                    id: "s03e06",
+                    name: "The Lazarus Experiment",
+                    image: "https://www.planetclaire.tv/wp-content/uploads/2007/03/doctor-who-the-lazarus-project_2.jpg"
+                },
+                {
+                    id: "s03e07",
+                    name: "42",
+                    image: "https://m.media-amazon.com/images/M/MV5BMTRhMTRkNzYtNDgwMy00MzdmLTlkZWYtNmZiZjA3MmQ1Mzk3XkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"
+                },
+                {
+                    id: "s03e08+9",
+                    name: "Human Nature / The Family of Blood",
+                    image: "https://www.bbc.co.uk/doctorwho/medialibrary/s3/images/1024/s3_09_wal_56.jpg?size=1024&promo=/doctorwho/medialibrary/s3/images/main-promo/s3_09_wal_56.jpg&purpose=Computer%20wallpaper&summary=Original%20homepage.&info=&tag_file_id=s3_09_wal_21"
+                },
+                {
+                    id: "s03e10",
+                    name: "Blink",
+                    image: "https://m.media-amazon.com/images/M/MV5BMmYxZjI2MzEtYWE4My00ZTA3LWIzMDQtZTA2N2VkZmI3ZWRlXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_.jpg"
+                },
+                {
+                    id: "s03e11",
+                    name: "Utopia",
+                    image: "https://i0.wp.com/4.bp.blogspot.com/-ZoDCffnptRU/UkJfddgsjbI/AAAAAAAADKc/334MB-A-Ijo/s1600/3x11-Utopia-doctor-who-20032940-1600-900.jpg"
+                },
+                {
+                    id: "s03e12+13",
+                    name: "The Sound of Drums / Last of the Time Lords",
+                    image: "https://images.mubicdn.net/images/film/291513/cache-633370-1610748032/image-w1280.jpg"
+                },
+
+                /* SEASON 4 */
+                {
+                    id: "s04e00",
+                    name: "Voyage of the Damned",
+                    image: "https://ichef.bbci.co.uk/images/ic/1200x675/p00t000x.jpg"
+                },
+                {
+                    id: "s04e01",
+                    name: "Partners in Crime",
+                    image: "https://images.squarespace-cdn.com/content/v1/5baab7130cf57de87fcfe634/1557686288976-Q8QTMJPGX74P4TJQ3XC6/adipose.jpg"
+                },
+                {
+                    id: "s04e02",
+                    name: "The Fires of Pompeii",
+                    image: "https://firebreathingdimetrodon.files.wordpress.com/2020/06/who0402.jpg"
+                },
+                {
+                    id: "s04e03",
+                    name: "Planet of the Ood",
+                    image: "https://static.wikia.nocookie.net/tardis/images/0/0c/Ood_in_container.jpg/revision/latest/scale-to-width-down/624?cb=20090722202208"
+                },
+                {
+                    id: "s04e04+5",
+                    name: "The Sontaran Stratagem / The Poison Sky",
+                    image: "https://ichef.bbci.co.uk/images/ic/640x360/p01g3llm.jpg"
+                },
+                {
+                    id: "s04e06",
+                    name: "The Doctor's Daughter",
+                    image: "https://static.wikia.nocookie.net/tardis/images/c/c3/The_Doctor%27s_Daughter_%28TV_story%29.jpg/revision/latest?cb=20201025204556"
+                },
+                {
+                    id: "s04e07",
+                    name: "The Unicorn and the Wasp",
+                    image: "https://2.bp.blogspot.com/-1PiM8ueO0C4/VztozVJQwFI/AAAAAAAAXtM/JCj-1gugsGM-rUfr33YLCqPOZdUZkTcxACLcB/s640/unicorn%2B1.jpg"
+                },
+                {
+                    id: "s04e08+9",
+                    name: "Silence in the Library / Forest of the Dead",
+                    image: "https://m.media-amazon.com/images/M/MV5BNTRlMWZjOGUtZDY1Mi00MDk2LWJlYjUtMjlkMzZiNWZmYzQzXkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"
+                },
+                {
+                    id: "s04e10",
+                    name: "Midnight",
+                    image: "https://m.media-amazon.com/images/M/MV5BYjhjMGZiNmQtNWU2OS00ZjY3LTkyMWYtOGRmNDFhZGJlMDg3XkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"
+                },
+                {
+                    id: "s04e11",
+                    name: "Turn Left",
+                    image: "https://static.wikia.nocookie.net/tardis/images/1/18/DonnaReflected.jpg/revision/latest/scale-to-width-down/624?cb=20160624203837"
+                },
+                {
+                    id: "s04e12+13",
+                    name: "The Stolen Earth / Journey's End",
+                    image: "https://static.wikia.nocookie.net/tardis/images/a/af/122.jpg/revision/latest?cb=20091101215459"
+                },
+                {
+                    id: "s04x01",
+                    name: "The Next Doctor",
+                    image: "https://ichef.bbci.co.uk/images/ic/1200x675/p069jb3n.jpg"
+                },
+                {
+                    id: "s04x02",
+                    name: "Planet of the Dead",
+                    image: "https://m.media-amazon.com/images/M/MV5BNTUxMTM0OTkxM15BMl5BanBnXkFtZTgwNDk5Nzk5MTE@._V1_.jpg"
+                },
+                {
+                    id: "s04x03",
+                    name: "The Waters of Mars",
+                    image: "https://thecoolkat1995.files.wordpress.com/2020/10/doctor-who-the-waters-of-mars-the-flood-3.png"
+                },
+                {
+                    id: "s04x04+5",
+                    name: "The End of Time",
+                    image: "https://ichef.bbci.co.uk/images/ic/640x360/p05pbw8y.jpg"
+                },
+            ];
+
+            var myPicker = new picker.Picker({
+                items: items,
+                localStorageKey: 'picker-state'
+            });
+
+            var pickerUI = new PickerUI(myPicker, {
+                elements: {
+                    pick: "#pick",
+                    pass: "#pass",
+                    undo: "#undo",
+                    redo: "#redo",
+                    evaluating: "#evaluating",
+                    favorites: "#favorites"
+                }
+            });
+
+            pickerUI.initialize();
+
+            /* Sortable favorites - you can safely remove this, and the Sortable.min.js script, if you don't want to be able to sort your favorite list. */
+            var sortable = new Sortable(pickerUI.elem.favorites.get(0), {
+                draggable: '.item',
+                animation: 100,
+                onStart: function () {
+                    pickerUI.elem.favorites.addClass("sorting");
+                },
+                onEnd: function () {
+                    pickerUI.elem.favorites.removeClass("sorting");
+                },
+                onUpdate: function () {
+                    myPicker.setFavorites(pickerUI.elem.favorites.children().map(function () {
+                        return pickerUI.getItem(this);
+                    }).get());
+                    pickerUI.update(true);
+                }
+            });
+            /* End sortable favorites */
+        </script>
+    </body>
 </html>
