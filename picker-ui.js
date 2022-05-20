@@ -40,7 +40,7 @@
 
         for (var key in this.elem.settings) {
             if (this.elem.settings.hasOwnProperty(key)) {
-                this.elem.settings[key].on('change', function() {
+                this.elem.settings[key].on('change', function () {
                     self.picker.setSettings(self.getSettings());
                     self.update(true);
                 });
@@ -49,10 +49,10 @@
 
         /* PICKER UI EVENT HANDLERS */
 
-        this.elem.evaluating.on('click', '.item', function(e) {
+        this.elem.evaluating.on('click', '.item', function (e) {
             e.preventDefault();
             self.select(this);
-        }).on('dblclick', '.item', function(e) {
+        }).on('dblclick', '.item', function (e) {
             // Prevent double-clicking from selecting the current item if some other items have been selected
             e.preventDefault();
             var selected = self.getSelected();
@@ -60,47 +60,48 @@
             if (selected.length === 0 || selected.length === 1 && selected[0] === item) {
                 self.pick([item]);
             }
-        }).on('mousedown', '.item', function(e) {
+        }).on('mousedown', '.item', function (e) {
             e.preventDefault();
         });
 
-        this.elem.pick.on('click', function(e) {
+        this.elem.pick.on('click', function (e) {
             e.preventDefault();
             var selected = self.getSelected();
             if (selected.length === 0) {
                 alert(self.messages.mustSelect);
-            }
-            else {
+            } else {
                 self.pick(selected);
             }
         });
 
-        this.elem.pass.on('click', function(e) {
+        this.elem.pass.on('click', function (e) {
             e.preventDefault();
             self.pass();
         });
 
-        this.elem.undo.on('click', function(e) {
+        this.elem.undo.on('click', function (e) {
             e.preventDefault();
             self.undo();
         });
 
-        this.elem.redo.on('click', function(e) {
+        this.elem.redo.on('click', function (e) {
             e.preventDefault();
             self.redo();
         });
 
         if (this.elem.reset) {
-            this.elem.reset.on('click', function(e) {
+            this.elem.reset.on('click', function (e) {
                 e.preventDefault();
                 self.reset();
             });
         }
 
         if (this.elem.sharedListContinue) {
-            this.elem.sharedListContinue.on('click', function(e) {
+            this.elem.sharedListContinue.on('click', function (e) {
                 e.preventDefault();
-                self.picker.resetToFavorites($.map(self.picker.getSharedFavorites(), function(item) { return item.id; }));
+                self.picker.resetToFavorites($.map(self.picker.getSharedFavorites(), function (item) {
+                    return item.id;
+                }));
                 console.log(self.picker.getSettings());
                 self.setSettings(self.picker.getSettings());
                 self.update(true);
@@ -109,7 +110,7 @@
         }
 
         if (this.elem.sharedListSkip) {
-            this.elem.sharedListSkip.on('click', function(e) {
+            this.elem.sharedListSkip.on('click', function (e) {
                 e.preventDefault();
                 self.dismissSharedList();
             });
@@ -120,8 +121,7 @@
             for (var key in obj) {
                 if (key === 'settings') {
                     result[key] = jquerify(obj[key]);
-                }
-                else if (obj.hasOwnProperty(key)) {
+                } else if (obj.hasOwnProperty(key)) {
                     result[key] = $(obj[key]);
                 }
             }
@@ -133,7 +133,7 @@
 
     /* INITIALIZATION */
 
-    PickerUI.prototype.initialize = function() {
+    PickerUI.prototype.initialize = function () {
         /**
          * Initializes UI.
          */
@@ -148,7 +148,7 @@
 
     /* GETTERS/SETTERS FOR SETTINGS */
 
-    PickerUI.prototype.getSetting = function(setting) {
+    PickerUI.prototype.getSetting = function (setting) {
         var $elem = $(this.elem.settings[setting]);
         var type = $elem.attr("type");
         var values;
@@ -157,8 +157,7 @@
         if (type === 'checkbox' || type === 'radio') {
             if ($elem.length === 1) {
                 return $elem.prop("checked");
-            }
-            else {
+            } else {
                 values = $.makeArray($elem.filter(":checked").map(function () {
                     var value = this.value;
                     if ($(this).hasClass("setting-number")) {
@@ -172,8 +171,7 @@
                     return values[0];
                 }
             }
-        }
-        else {
+        } else {
             value = $elem.val();
             if (type === 'number' || $(this).hasClass("setting-number")) {
                 value *= 1;
@@ -182,15 +180,14 @@
         }
     };
 
-    PickerUI.prototype.setSetting = function(setting, value) {
+    PickerUI.prototype.setSetting = function (setting, value) {
         var $elem = $(this.elem.settings[setting]);
         var type = $elem.attr("type");
 
         if (type === 'checkbox' || type === 'radio') {
             if ($elem.length === 1) {
                 $elem.prop("checked", value);
-            }
-            else {
+            } else {
                 $elem.each(function () {
                     var val = this.value;
                     if ($(this).hasClass("setting-number")) {
@@ -199,8 +196,7 @@
                     $(this).prop("checked", $.isArray(value) ? value.indexOf(val) !== -1 : value === val);
                 });
             }
-        }
-        else {
+        } else {
             if (type === 'number' || $(this).hasClass("setting-number")) {
                 value *= 1;
             }
@@ -208,7 +204,7 @@
         }
     };
 
-    PickerUI.prototype.getSettings = function() {
+    PickerUI.prototype.getSettings = function () {
         var settings = {};
         var setting;
 
@@ -220,7 +216,7 @@
         return settings;
     };
 
-    PickerUI.prototype.setSettings = function(settings) {
+    PickerUI.prototype.setSettings = function (settings) {
         var setting;
 
         for (setting in settings) {
@@ -232,33 +228,33 @@
 
     /* SELECTION */
 
-    PickerUI.prototype.select = function(elem) {
+    PickerUI.prototype.select = function (elem) {
         /**
          * Selects the given element.
          */
         $(elem).toggleClass("selected");
     };
 
-    PickerUI.prototype.getItem = function(elem) {
+    PickerUI.prototype.getItem = function (elem) {
         /**
          * Gets the item associated with this element.
          */
         return $(elem).data('item');
     };
 
-    PickerUI.prototype.getSelected = function() {
+    PickerUI.prototype.getSelected = function () {
         /**
          * Returns a list of the currently selected items.
          */
         var self = this;
-        return this.elem.evaluating.find(".selected").map(function(i, item) {
+        return this.elem.evaluating.find(".selected").map(function (i, item) {
             return self.getItem(this);
         }).get();
     };
 
     /* UI UPDATE FUNCTIONS */
 
-    PickerUI.prototype.display = function(func, quick) {
+    PickerUI.prototype.display = function (func, quick) {
         /**
          * If quick is true, run the given display func immediately.
          * Otherwise, fade out the item list, run it, then fade in
@@ -268,16 +264,15 @@
 
         if (quick) {
             func();
-        }
-        else {
-            this.elem.evaluating.animate({opacity: 0}, 'fast', function() {
+        } else {
+            this.elem.evaluating.animate({opacity: 0}, 'fast', function () {
                 func();
                 self.elem.evaluating.animate({opacity: 1}, 'fast');
             });
         }
     };
 
-    PickerUI.prototype.displayEmpty = function() {
+    PickerUI.prototype.displayEmpty = function () {
         /**
          * Displays an empty message.
          */
@@ -289,20 +284,20 @@
         this.updatePickPass(false);
     };
 
-    PickerUI.prototype.displayBatch = function() {
+    PickerUI.prototype.displayBatch = function () {
         /**
          * Displays the current evaluating batch of items.
          */
         var self = this;
         var batch = this.picker.getEvaluating();
         this.elem.evaluating.empty();
-        $.each(batch, function() {
+        $.each(batch, function () {
             self.elem.evaluating.append(self.getItemElem(this, self.picker.getSettings()));
         });
         this.updatePickPass(true);
     };
 
-    PickerUI.prototype.updateHistoryButtons = function() {
+    PickerUI.prototype.updateHistoryButtons = function () {
         /**
          * Updates the undo/redo buttons based on the state.
          */
@@ -310,7 +305,7 @@
         this.elem.redo.toggleClass("disabled", !this.picker.canRedo());
     };
 
-    PickerUI.prototype.updatePickPass = function(canPick) {
+    PickerUI.prototype.updatePickPass = function (canPick) {
         /**
          * Enables/disables the pick/pass buttons based on canPick.
          */
@@ -318,14 +313,14 @@
         this.elem.pass.toggleClass("disabled", !canPick).prop("disabled", !canPick);
     };
 
-    PickerUI.prototype.updateFavorites = function() {
+    PickerUI.prototype.updateFavorites = function () {
         /**
          * Update the found favorites list according to the state.
          */
         var self = this;
         var favorites = this.picker.getFavorites();
         this.elem.favorites.empty();
-        $.each(favorites, function() {
+        $.each(favorites, function () {
             self.elem.favorites.append(self.getItemElem(this, self.picker.getSettings()));
         });
         if (this.elem.shortcodeLink && this.picker.options.favoritesQueryParam && this.picker.options.shortcodeLength) {
@@ -333,7 +328,7 @@
         }
     };
 
-    PickerUI.prototype.update = function(quick) {
+    PickerUI.prototype.update = function (quick) {
         /**
          * Perform a full UI update based on the current state. The update is
          * immediate if quick is true; otherwise, the Pokémon display will be
@@ -341,11 +336,10 @@
          */
         var self = this;
 
-        this.display(function() {
+        this.display(function () {
             if (self.picker.getEvaluating().length === 0) {
                 self.displayEmpty();
-            }
-            else {
+            } else {
                 self.displayBatch()
             }
             self.updateFavorites();
@@ -357,7 +351,7 @@
         this.updateHistoryButtons();
     };
 
-    PickerUI.prototype.dismissSharedList = function() {
+    PickerUI.prototype.dismissSharedList = function () {
         /**
          * Dismiss a shared list.
          */
@@ -370,7 +364,7 @@
         this.elem.sharedListContainer.hide();
     };
 
-    PickerUI.prototype.displaySharedList = function(favorites) {
+    PickerUI.prototype.displaySharedList = function (favorites) {
         /**
          * Display the given favorites as a shared list.
          */
@@ -381,7 +375,7 @@
 
         if (!self.elem.sharedList || !self.elem.sharedListContainer) return;
 
-        $.each(favorites, function() {
+        $.each(favorites, function () {
             self.elem.sharedList.append(self.getItemElem(this, self.picker.getSettings()));
         });
 
@@ -390,7 +384,7 @@
 
     /* MAIN PICKER FUNCTIONALITY */
 
-    PickerUI.prototype.pick = function(items) {
+    PickerUI.prototype.pick = function (items) {
         /**
          * Pick the given items.
          */
@@ -400,7 +394,7 @@
         this.update();
     };
 
-    PickerUI.prototype.pass = function() {
+    PickerUI.prototype.pass = function () {
         /**
          * Pass on this batch.
          */
@@ -410,7 +404,7 @@
         this.update();
     };
 
-    PickerUI.prototype.undo = function() {
+    PickerUI.prototype.undo = function () {
         /**
          * Undo the last action.
          */
@@ -421,7 +415,7 @@
         }
     };
 
-    PickerUI.prototype.redo = function() {
+    PickerUI.prototype.redo = function () {
         /**
          * Redo the last undone action.
          */
@@ -432,7 +426,7 @@
         }
     };
 
-    PickerUI.prototype.reset = function() {
+    PickerUI.prototype.reset = function () {
         /**
          * Reset the state (prompting if the state is not untouched).
          */
@@ -445,7 +439,7 @@
 
     /* UI UTILITY FUNCTIONS */
 
-    PickerUI.prototype.wrapItem = function(itemContent) {
+    PickerUI.prototype.wrapItem = function (itemContent) {
         /**
          * Wraps the given item content in an HTML structure and returns it.
          */
@@ -455,7 +449,7 @@
         return $('<li></li>').append(itemContent);
     };
 
-    PickerUI.prototype.getItemElem = function(item, settings) {
+    PickerUI.prototype.getItemElem = function (item, settings) {
         /**
          * Creates and returns an element or jQuery object for an item,
          * to be inserted into the evaluating element.
@@ -471,24 +465,23 @@
             return $(this.options.getItemElem(item, settings)).addClass('item').data('item', item.id);
         }
         if (item.image || this.options.getItemImageUrl) {
-        //if (false) {
+            //if (false) {
             itemContent = $(
                 //TODO added
                 '<span class="title">' + itemName + '</span>' + '<img src="' + (this.options.getItemImageUrl ? this.options.getItemImageUrl(item, settings) : item.image) + '" alt="' + itemName + '" title="' + itemName + '">'
             );
-        }
-        else {
+        } else {
             itemContent = $('<span>' + itemName + '</span>');
         }
         return this.wrapItem(itemContent).addClass('item').data('item', item.id);
     };
 
-    PickerUI.prototype.makeResetButton = function(text) {
+    PickerUI.prototype.makeResetButton = function (text) {
         /**
          * Creates and returns a reset button.
          */
         var self = this;
-        return $('<button type="button">' + (text || this.messages.reset) + '</button>').on('click', function() {
+        return $('<button type="button">' + (text || this.messages.reset) + '</button>').on('click', function () {
             self.reset();
         });
     };

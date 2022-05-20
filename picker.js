@@ -12,9 +12,9 @@
     /* POLYFILLS */
 
     if (!Array.isArray) {
-      Array.isArray = function(arg) {
-        return Object.prototype.toString.call(arg) === '[object Array]';
-      };
+        Array.isArray = function (arg) {
+            return Object.prototype.toString.call(arg) === '[object Array]';
+        };
     }
 
     /* PICKER STATE OBJECT */
@@ -29,7 +29,7 @@
 
     /* INITIALIZATION AND SERIALIZATION */
 
-    PickerState.prototype.getState = function() {
+    PickerState.prototype.getState = function () {
         /**
          * Returns a state object corresponding to this PickerState.
          * We're using deep copies because otherwise the eliminatedBy arrays
@@ -45,7 +45,7 @@
         };
     };
 
-    PickerState.prototype.initialize = function(settings) {
+    PickerState.prototype.initialize = function (settings) {
         /**
          * Initializes the PickerState according to the given settings
          * (or the default settings if no settings are provided).
@@ -67,7 +67,7 @@
         this.nextBatch();
     };
 
-    PickerState.prototype.restoreState = function(state) {
+    PickerState.prototype.restoreState = function (state) {
         /**
          * Sets the PickerState to the given dehydrated state.
          */
@@ -87,7 +87,7 @@
         this.validate();
     };
 
-    PickerState.prototype.reset = function() {
+    PickerState.prototype.reset = function () {
         /**
          * Resets the PickerState to its initial state (leaving the settings
          * unchanged).
@@ -97,7 +97,7 @@
 
     /* PUBLIC SETTERS */
 
-    PickerState.prototype.setSettings = function(settings) {
+    PickerState.prototype.setSettings = function (settings) {
         /**
          * Sets the settings.
          */
@@ -108,7 +108,7 @@
         this.resetBatchSize();
     };
 
-    PickerState.prototype.setFavorites = function(favorites) {
+    PickerState.prototype.setFavorites = function (favorites) {
         /**
          * Overwrites the found favorites list with the given one.
          * Since it runs validate, it should be fine if this changes the
@@ -120,7 +120,7 @@
 
     /* STATE UTILITY FUNCTIONS */
 
-    PickerState.prototype.findByIdentifier = function(identifier, array) {
+    PickerState.prototype.findByIdentifier = function (identifier, array) {
         /**
          * Searches for the given item identifier in the given array and
          * returns the index at which that identifier is found (or -1 if it is
@@ -135,21 +135,20 @@
         return -1;
     };
 
-    PickerState.prototype.shouldIncludeItem = function(identifier, settings) {
+    PickerState.prototype.shouldIncludeItem = function (identifier, settings) {
         /**
          * Returns true if this item should be included in the picker
          * according to the current settings.
          */
         if (this.options.getFilteredItems) {
             return this.options.getFilteredItems(settings).indexOf(identifier) !== -1;
-        }
-        else if (this.options.shouldIncludeItem) {
+        } else if (this.options.shouldIncludeItem) {
             return this.options.shouldIncludeItem(identifier, settings);
         }
         return true;
     };
 
-    PickerState.prototype.getFilteredItems = function() {
+    PickerState.prototype.getFilteredItems = function () {
         /**
          * Returns a list of item identifiers that match the given
          * settings.
@@ -167,7 +166,7 @@
         return result;
     };
 
-    PickerState.prototype.findInArray = function(identifier, arrayName) {
+    PickerState.prototype.findInArray = function (identifier, arrayName) {
         /**
          * If the given identifier is found in the given array of the state,
          * return that entry. Otherwise, return null.
@@ -175,13 +174,12 @@
         var index = this.findByIdentifier(identifier, this.arrays[arrayName]);
         if (index !== -1) {
             return this.arrays[arrayName][index];
-        }
-        else {
+        } else {
             return null;
         }
     };
 
-    PickerState.prototype.getBatchSize = function(currentSize) {
+    PickerState.prototype.getBatchSize = function (currentSize) {
         /**
          * Returns the number of items that should ideally be displayed at a
          * time, given the whole round is currentSize items.
@@ -192,7 +190,7 @@
         return Math.max(2, this.settings.minBatchSize || 2, Math.min(this.settings.maxBatchSize || 20, Math.ceil(currentSize / 5)));
     };
 
-    PickerState.prototype.resetBatchSize = function() {
+    PickerState.prototype.resetBatchSize = function () {
         /**
          * Resets the current batch size to whatever it ought to be given the
          * size of the current and survived arrays and adjusts the evaluating
@@ -250,8 +248,7 @@
                         this.removeFromEliminated(identifier);
                     }
                     verifyObject[identifier] = true;
-                }
-                else {
+                } else {
                     // This is an unexpected item - we want to remove it
                     arrays[i].splice(j, 1);
                     extraItems.push(identifier);
@@ -300,15 +297,14 @@
         if (evaluating.length < 2) {
             // Give us an evaluation batch of the size that it should be.
             this.resetBatchSize();
-        }
-        else {
+        } else {
             this.batchSize = evaluating.length;
         }
     };
 
     /* MAIN PICKER LOGIC */
 
-    PickerState.prototype.pick = function(picked) {
+    PickerState.prototype.pick = function (picked) {
         /**
          * Picks the given items from the current evaluating batch, moving
          * them into the survived array and the others into the eliminated
@@ -325,8 +321,7 @@
                 // This item is one of the ones we picked - add it to
                 // survived
                 survived.push(evaluating[i]);
-            }
-            else {
+            } else {
                 // This item is not one of the ones we picked - add it to
                 // eliminated, with the picked items as the eliminators
                 eliminated.push({id: evaluating[i], eliminatedBy: picked.slice(0)});
@@ -336,7 +331,7 @@
         this.nextBatch();
     };
 
-    PickerState.prototype.pass = function() {
+    PickerState.prototype.pass = function () {
         /**
          * Passes on this batch of items, equivalent to picking every
          * item.
@@ -344,7 +339,7 @@
         this.pick(this.arrays.evaluating);
     };
 
-    PickerState.prototype.removeEliminatedBy = function(i, j) {
+    PickerState.prototype.removeEliminatedBy = function (i, j) {
         /**
          * Removes the jth item from the eliminatedBy array of the ith
          * item in the eliminated array, restoring the item to the
@@ -361,7 +356,7 @@
         }
     };
 
-    PickerState.prototype.removeFromEliminated = function(item) {
+    PickerState.prototype.removeFromEliminated = function (item) {
         /**
          * Remove this item from all eliminatedBy lists, restoring any
          * items left with empty eliminatedBy lists to the survived array.
@@ -380,7 +375,7 @@
         }
     };
 
-    PickerState.prototype.addToFavorites = function(item) {
+    PickerState.prototype.addToFavorites = function (item) {
         /**
          * Add the given item (identifier) to favorites and restore
          * the items eliminated by it to survived.
@@ -389,7 +384,7 @@
         this.removeFromEliminated(item);
     };
 
-    PickerState.prototype.nextBatch = function() {
+    PickerState.prototype.nextBatch = function () {
         /**
          * Moves on to the next batch of items, adding to favorites if appropriate.
          */
@@ -403,7 +398,7 @@
         this.arrays.evaluating = current.splice(0, this.batchSize);
     };
 
-    PickerState.prototype.nextRound = function() {
+    PickerState.prototype.nextRound = function () {
         /**
          * Moves on to the next round, shuffling the survived array back into
          * the current array.
@@ -462,7 +457,7 @@
             if (options.shortcodeLength && (!options.items[i].shortcode || options.items[i].shortcode.length !== options.shortcodeLength)) {
                 console.error("You have defined a shortcode length of " + options.shortcodeLength + "; however, you have an item with a shortcode that does not match this length (" + options.items[i].shortcode + "). The shortcode functionality only works if the item shortcodes are of a consistent length.", options.items[i]);
                 return;
-            } 
+            }
             this.itemMap[options.items[i].id] = options.items[i];
         }
 
@@ -507,8 +502,7 @@
                 );
             }
             this.pushHistory();
-        }
-        else {
+        } else {
             this.state.initialize(defaultSettings);
             this.pushHistory();
         }
@@ -516,35 +510,35 @@
 
     /* GETTERS */
 
-    Picker.prototype.getArray = function(arrayName) {
+    Picker.prototype.getArray = function (arrayName) {
         /**
          * Gets the full list of items in the given array.
          */
         return this.mapItems(this.state.arrays[arrayName]);
     };
 
-    Picker.prototype.getFavorites = function() {
+    Picker.prototype.getFavorites = function () {
         /**
          * Gets the current favorite list.
          */
         return this.getArray('favorites');
     };
 
-    Picker.prototype.getEvaluating = function() {
+    Picker.prototype.getEvaluating = function () {
         /**
          * Gets the current evaluating list.
          */
         return this.getArray('evaluating');
     };
 
-    Picker.prototype.getSettings = function() {
+    Picker.prototype.getSettings = function () {
         /**
          * Gets the state's current settings.
          */
         return this.state.settings;
     };
 
-    Picker.prototype.getSharedFavorites = function() {
+    Picker.prototype.getSharedFavorites = function () {
         /**
          * Gets the shared favorite list.
          */
@@ -559,23 +553,23 @@
 
     /* SHORTCODES */
 
-    Picker.prototype.getShortcodeString = function() {
+    Picker.prototype.getShortcodeString = function () {
         /**
          * Gets a shortcode string for the current favorite list.
          */
-        return map(this.getFavorites(), function(item) {
+        return map(this.getFavorites(), function (item) {
             return item.shortcode;
         }).join('');
     };
 
-    Picker.prototype.getShortcodeLink = function() {
+    Picker.prototype.getShortcodeLink = function () {
         /**
          * Gets a shortcode link for the current favorite list.
          */
         return '?' + this.options.favoritesQueryParam + '=' + this.getShortcodeString();
     };
 
-    Picker.prototype.parseShortcodeString = function(shortcodeString) {
+    Picker.prototype.parseShortcodeString = function (shortcodeString) {
         /**
          * Returns the list of favorites given by a shortcode string.
          */
@@ -604,7 +598,7 @@
 
     /* HISTORY */
 
-    Picker.prototype.pushHistory = function() {
+    Picker.prototype.pushHistory = function () {
         /**
          * Adds the current state to the history array.
          */
@@ -616,21 +610,21 @@
         this.saveState();
     };
 
-    Picker.prototype.canUndo = function() {
+    Picker.prototype.canUndo = function () {
         /**
          * Returns true if we can undo.
          */
         return this.historyPos > 0;
     };
 
-    Picker.prototype.canRedo = function() {
+    Picker.prototype.canRedo = function () {
         /**
          * Returns true if we can redo.
          */
         return this.historyPos < this.history.length - 1;
     };
 
-    Picker.prototype.undo = function() {
+    Picker.prototype.undo = function () {
         /**
          * Reverts to the previous state in the history array.
          */
@@ -641,7 +635,7 @@
         this.saveState();
     };
 
-    Picker.prototype.redo = function() {
+    Picker.prototype.redo = function () {
         /**
          * Proceeds to the next state in the history array.
          */
@@ -665,7 +659,7 @@
         var finalFavorites = [];
         var i;
 
-        for (i = 0; i < favorites.length; i ++) {
+        for (i = 0; i < favorites.length; i++) {
             // Only add the item if it matches the settings (or if we don't have any given settings)
             if (!useSettings || this.state.shouldIncludeItem(favorites[i], useSettings)) {
                 finalFavorites.push(favorites[i]);
@@ -676,8 +670,7 @@
             // If we don't have any given settings, then set the settings according to the favorites instead
             if (this.options.settingsFromFavorites) {
                 useSettings = copyObject(this.options.defaultSettings, this.options.settingsFromFavorites(this.mapItems(favorites)));
-            }
-            else {
+            } else {
                 useSettings = copyObject(this.options.defaultSettings);
             }
         }
@@ -691,27 +684,25 @@
 
     /* STATE */
 
-    Picker.prototype.saveState = function() {
+    Picker.prototype.saveState = function () {
         /**
          * Saves the given state in localStorage, assuming it is available.
          */
         if (this.options.saveState) {
             this.options.saveState.call(this, this.state.getState());
-        }
-        else if (localStorage && JSON && this.options.localStorageKey) {
+        } else if (localStorage && JSON && this.options.localStorageKey) {
             localStorage.setItem(this.options.localStorageKey, JSON.stringify(this.state.getState()));
         }
     };
 
-    Picker.prototype.loadState = function() {
+    Picker.prototype.loadState = function () {
         /**
          * Returns the state stored in localStorage, if there is one.
          */
         var state;
         if (this.options.loadState) {
             state = this.options.loadState.call(this);
-        }
-        else if (localStorage && JSON && this.options.localStorageKey) {
+        } else if (localStorage && JSON && this.options.localStorageKey) {
             try {
                 state = JSON.parse(localStorage.getItem(this.options.localStorageKey));
             } catch (e) {
@@ -721,7 +712,7 @@
         return state;
     };
 
-    Picker.prototype.isUntouched = function() {
+    Picker.prototype.isUntouched = function () {
         /**
          * Returns true if the state has not been touched (either it's a
          * completely clean state or one that only has found favorites
@@ -755,7 +746,7 @@
         return true;
     };
 
-    Picker.prototype.hasItems = function() {
+    Picker.prototype.hasItems = function () {
         /**
          * Returns true if the picker has any items (that aren't filtered
          * out).
@@ -765,34 +756,34 @@
 
     /* ACTIONS */
 
-    Picker.prototype.pick = function(picked) {
+    Picker.prototype.pick = function (picked) {
         this.state.pick(picked);
         this.pushHistory();
     };
 
-    Picker.prototype.pass = function() {
+    Picker.prototype.pass = function () {
         this.state.pass();
         this.pushHistory();
     };
 
-    Picker.prototype.reset = function() {
+    Picker.prototype.reset = function () {
         this.state.reset();
         this.pushHistory();
     };
 
-    Picker.prototype.setSettings = function(settings) {
+    Picker.prototype.setSettings = function (settings) {
         this.state.setSettings(settings);
         this.pushHistory();
     };
 
-    Picker.prototype.setFavorites = function(favorites) {
+    Picker.prototype.setFavorites = function (favorites) {
         this.state.setFavorites(favorites);
         this.pushHistory();
     };
 
     /* PICKER UTILITY FUNCTIONS */
 
-    Picker.prototype.forEachItem = function(func) {
+    Picker.prototype.forEachItem = function (func) {
         /**
          * Executes func for each identifier in the picker's item map.
          */
@@ -809,13 +800,13 @@
         }
     };
 
-    Picker.prototype.mapItems = function(identifiers) {
+    Picker.prototype.mapItems = function (identifiers) {
         /**
          * Gets an array of full item objects corresponding to the given
          * identifiers.
          */
         var self = this;
-        return map(identifiers, function(identifier) {
+        return map(identifiers, function (identifier) {
             return self.itemMap[identifier];
         });
     };
@@ -849,12 +840,10 @@
             if (array[i] && typeof array[i] === 'object') {
                 if (Array.isArray(array[i])) {
                     result[i] = copyArray(array[i]);
-                }
-                else {
+                } else {
                     result[i] = copyObject(array[i]);
                 }
-            }
-            else {
+            } else {
                 result[i] = array[i];
             }
         }
@@ -875,12 +864,10 @@
                     if (arguments[a][key] && typeof arguments[a][key] === 'object') {
                         if (Array.isArray(arguments[a][key])) {
                             result[key] = copyArray(arguments[a][key]);
-                        }
-                        else {
+                        } else {
                             result[key] = copyObject(arguments[a][key]);
                         }
-                    }
-                    else {
+                    } else {
                         result[key] = arguments[a][key];
                     }
                 }
