@@ -113,7 +113,7 @@
                 height: 200px;
                 width: 200px;
                 line-height: 100px;
-                border: 3px solid transparent;
+                border: 5px solid transparent;
                 text-align: center;
                 position: relative;
                 vertical-align: top;
@@ -196,7 +196,7 @@
             }
 
             #evaluating li.selected {
-                border: 3px solid #7AC;
+                border: 5px solid #7AC;
             }
 
             #evaluating, #buttons {
@@ -259,246 +259,64 @@
         <script>
             'use strict';
 
+            //@formatter:off
             var items = [
                 /* SEASON 1 */
-                {
-                    id: "s01e01",
-                    name: "Rose",
-                    image: "https://m.media-amazon.com/images/M/MV5BMjI3NTk3MTQ4NV5BMl5BanBnXkFtZTgwNjk0NTMwMjE@._V1_.jpg"
-                },
-                {
-                    id: "s01e02",
-                    name: "The End of the World",
-                    image: "https://m.media-amazon.com/images/M/MV5BMjM1MDg0MjQ2OV5BMl5BanBnXkFtZTgwMTA1NTMwMjE@._V1_.jpg"
-                },
-                {
-                    id: "s01e03",
-                    name: "The Unquiet Dead",
-                    image: "https://www.planetclaire.tv/wp-content/uploads/2015/08/doctor-who-the-unquiet-dead_2.jpg"
-                },
-                {
-                    id: "s01e04+5",
-                    name: "Aliens of London / World War Three",
-                    image: "https://m.media-amazon.com/images/M/MV5BMTU1NTI2Mzk3M15BMl5BanBnXkFtZTgwMDA1NTMwMjE@._V1_.jpg"
-                },
-                {
-                    id: "s01e06",
-                    name: "Dalek",
-                    image: "https://m.media-amazon.com/images/M/MV5BZTUyOGI4ODktNjIwOS00NjQyLWFhMDktZTYzNjllNjI2ZDRkXkEyXkFqcGdeQXVyNzA5NTYxMDg@._V1_.jpg"
-                },
+                {id: "s01e01", name: "Rose", image: "https://m.media-amazon.com/images/M/MV5BMjI3NTk3MTQ4NV5BMl5BanBnXkFtZTgwNjk0NTMwMjE@._V1_.jpg"},
+                {id: "s01e02", name: "The End of the World", image: "https://m.media-amazon.com/images/M/MV5BMjM1MDg0MjQ2OV5BMl5BanBnXkFtZTgwMTA1NTMwMjE@._V1_.jpg"},
+                {id: "s01e03", name: "The Unquiet Dead", image: "https://www.planetclaire.tv/wp-content/uploads/2015/08/doctor-who-the-unquiet-dead_2.jpg"},
+                {id: "s01e04+5", name: "Aliens of London / World War Three", image: "https://m.media-amazon.com/images/M/MV5BMTU1NTI2Mzk3M15BMl5BanBnXkFtZTgwMDA1NTMwMjE@._V1_.jpg"},
+                {id: "s01e06", name: "Dalek", image: "https://m.media-amazon.com/images/M/MV5BZTUyOGI4ODktNjIwOS00NjQyLWFhMDktZTYzNjllNjI2ZDRkXkEyXkFqcGdeQXVyNzA5NTYxMDg@._V1_.jpg"},
                 {id: "s01e07", name: "The Long Game", image: "https://ichef.bbci.co.uk/images/ic/976xn/p00r8kdn.jpg"},
-                {
-                    id: "s01e08",
-                    name: "Father's Day",
-                    image: "https://m.media-amazon.com/images/M/MV5BNDI4NDA3NjYtOTQ1Mi00ZDM5LTg4YmYtYzk5YWU4OTIzNDdiXkEyXkFqcGdeQXVyNzA5NTYxMDg@._V1_.jpg"
-                },
-                {
-                    id: "s01e09+10",
-                    name: "The Empty Child / The Doctor Dances",
-                    image: "https://images.immediate.co.uk/production/volatile/sites/3/2013/03/27892.jpg?quality=90&resize=620,413"
-                },
-                {
-                    id: "s01e11",
-                    name: "Boom Town",
-                    image: "https://www.planetclaire.tv/wp-content/uploads/2015/08/doctor-who-boom-town.jpg"
-                },
-                {
-                    id: "s01e12+13",
-                    name: "Bad Wolf / The Parting of Ways",
-                    image: "https://3.bp.blogspot.com/-KF4-OE1nF1g/WqlHvdkKRZI/AAAAAAAARQs/MRk3hNNyqus7_tncPDBgjMSdul_OOBquACLcBGAs/s1600/parting.jpg"
-                },
+                {id: "s01e08", name: "Father's Day", image: "https://m.media-amazon.com/images/M/MV5BNDI4NDA3NjYtOTQ1Mi00ZDM5LTg4YmYtYzk5YWU4OTIzNDdiXkEyXkFqcGdeQXVyNzA5NTYxMDg@._V1_.jpg"},
+                {id: "s01e09+10", name: "The Empty Child / The Doctor Dances", image: "https://images.immediate.co.uk/production/volatile/sites/3/2013/03/27892.jpg?quality=90&resize=620,413"},
+                {id: "s01e11", name: "Boom Town", image: "https://www.planetclaire.tv/wp-content/uploads/2015/08/doctor-who-boom-town.jpg"},
+                {id: "s01e12+13", name: "Bad Wolf / The Parting of Ways", image: "https://3.bp.blogspot.com/-KF4-OE1nF1g/WqlHvdkKRZI/AAAAAAAARQs/MRk3hNNyqus7_tncPDBgjMSdul_OOBquACLcBGAs/s1600/parting.jpg"},
 
                 /* SEASON 2 */
-                {
-                    id: "s02e00",
-                    name: "The Christmas Invasion",
-                    image: "https://ichef.bbci.co.uk/images/ic/640x360/p08ztfp3.jpg"
-                },
-                {
-                    id: "s02e01",
-                    name: "New Earth",
-                    image: "https://m.media-amazon.com/images/M/MV5BNjMwMjExNjI4Nl5BMl5BanBnXkFtZTgwMzIxNDEzMjE@._V1_.jpg"
-                },
-                {
-                    id: "s02e02",
-                    name: "Tooth and Claw",
-                    image: "https://m.media-amazon.com/images/M/MV5BYmQyYzA4Y2YtZjBiMS00ZGI0LThhNzYtOThmYzQ3YThjOGZlXkEyXkFqcGdeQXVyNjMyMzczMzY@._V1_.jpg"
-                },
-                {
-                    id: "s02e03",
-                    name: "School Reunion",
-                    image: "https://m.media-amazon.com/images/M/MV5BMjE3NDgwNzIzOV5BMl5BanBnXkFtZTgwMDI1NTMwMjE@._V1_.jpg"
-                },
-                {
-                    id: "s02e04",
-                    name: "The Girl in the Fireplace",
-                    image: "https://images.immediate.co.uk/production/volatile/sites/3/2020/05/Doctor-Who-Fireplace-6230896.jpg?quality=90&resize=980,654"
-                },
-                {
-                    id: "s02e05+6",
-                    name: "Rise of the Cybermen / The Age of Steel",
-                    image: "https://thetimescales.com/xl_covers/679-new_tv_series-10893.jpg"
-                },
-                {
-                    id: "s02e07",
-                    name: "The Idiot's Lantern",
-                    image: "https://4.bp.blogspot.com/-sR9yjV8Wpgc/WrJJjyiWtcI/AAAAAAAARSc/IRxfTOKwyw4bjktyIbOxFxmf7vUfYi1XACLcBGAs/s1600/idiot.jpg"
-                },
-                {
-                    id: "s02e08+9",
-                    name: "The Impossible Planet / The Satan Pit",
-                    image: "https://static.wikia.nocookie.net/tardis/images/b/b9/The_Beast.jpg/revision/latest?cb=20070116215610"
-                },
-                {
-                    id: "s02e10",
-                    name: "Love & Monsters",
-                    image: "https://thecoolkat1995.files.wordpress.com/2019/05/doctor-who-love-and-monsters-6.jpg"
-                },
-                {
-                    id: "s02e11",
-                    name: "Fear Her",
-                    image: "http://images.amcnetworks.com/bbcamerica.com/wp-content/uploads/2015/11/DW_211.jpg"
-                },
-                {
-                    id: "s02e12+13",
-                    name: "Army of Ghosts / Doomsday",
-                    image: "https://static.wikia.nocookie.net/tardis/images/5/5c/Army_of_ghosts_main.jpg/revision/latest?cb=20120611235449"
-                },
+                {id: "s02e00", name: "The Christmas Invasion", image: "https://ichef.bbci.co.uk/images/ic/640x360/p08ztfp3.jpg"},
+                {id: "s02e01", name: "New Earth", image: "https://m.media-amazon.com/images/M/MV5BNjMwMjExNjI4Nl5BMl5BanBnXkFtZTgwMzIxNDEzMjE@._V1_.jpg"},
+                {id: "s02e02", name: "Tooth and Claw", image: "https://m.media-amazon.com/images/M/MV5BYmQyYzA4Y2YtZjBiMS00ZGI0LThhNzYtOThmYzQ3YThjOGZlXkEyXkFqcGdeQXVyNjMyMzczMzY@._V1_.jpg"},
+                {id: "s02e03", name: "School Reunion", image: "https://m.media-amazon.com/images/M/MV5BMjE3NDgwNzIzOV5BMl5BanBnXkFtZTgwMDI1NTMwMjE@._V1_.jpg"},
+                {id: "s02e04", name: "The Girl in the Fireplace", image: "https://images.immediate.co.uk/production/volatile/sites/3/2020/05/Doctor-Who-Fireplace-6230896.jpg?quality=90&resize=980,654"},
+                {id: "s02e05+6", name: "Rise of the Cybermen / The Age of Steel", image: "https://thetimescales.com/xl_covers/679-new_tv_series-10893.jpg"},
+                {id: "s02e07", name: "The Idiot's Lantern", image: "https://4.bp.blogspot.com/-sR9yjV8Wpgc/WrJJjyiWtcI/AAAAAAAARSc/IRxfTOKwyw4bjktyIbOxFxmf7vUfYi1XACLcBGAs/s1600/idiot.jpg"},
+                {id: "s02e08+9", name: "The Impossible Planet / The Satan Pit", image: "https://static.wikia.nocookie.net/tardis/images/b/b9/The_Beast.jpg/revision/latest?cb=20070116215610"},
+                {id: "s02e10", name: "Love & Monsters", image: "https://thecoolkat1995.files.wordpress.com/2019/05/doctor-who-love-and-monsters-6.jpg"},
+                {id: "s02e11", name: "Fear Her", image: "http://images.amcnetworks.com/bbcamerica.com/wp-content/uploads/2015/11/DW_211.jpg"},
+                {id: "s02e12+13", name: "Army of Ghosts / Doomsday", image: "https://static.wikia.nocookie.net/tardis/images/5/5c/Army_of_ghosts_main.jpg/revision/latest?cb=20120611235449"},
 
                 /* SEASON 3 */
-                {
-                    id: "s03e00",
-                    name: "The Runaway Bride",
-                    image: "https://pm1.narvii.com/6611/8188836ec7a26134c0e47ccdcc5f35fc092cc2d1_hq.jpg"
-                },
-                {
-                    id: "s03e01",
-                    name: "Smith and Jones",
-                    image: "https://m.media-amazon.com/images/M/MV5BNmI3YWQ3YzgtYmExZC00ZTRkLWFhZDUtYzMyMTVhNDM3ZmNjXkEyXkFqcGdeQXVyNjMyMzczMzY@._V1_.jpg"
-                },
-                {
-                    id: "s03e02",
-                    name: "The Shakespeare Code",
-                    image: "https://m.media-amazon.com/images/M/MV5BMTUwMDg2OTY5MF5BMl5BanBnXkFtZTgwMjczNTMwMjE@._V1_.jpg"
-                },
-                {
-                    id: "s03e03",
-                    name: "Gridlock",
-                    image: "https://m.media-amazon.com/images/M/MV5BMjIyNzgxOTAxN15BMl5BanBnXkFtZTgwNjczNTMwMjE@._V1_.jpg"
-                },
-                {
-                    id: "s03e04+5",
-                    name: "Daleks in Manhattan / Evolution of the Daleks",
-                    image: "https://www.doctorwhotv.co.uk/wp-content/uploads/DaleksInManhattan-ten.jpg"
-                },
-                {
-                    id: "s03e06",
-                    name: "The Lazarus Experiment",
-                    image: "https://www.planetclaire.tv/wp-content/uploads/2007/03/doctor-who-the-lazarus-project_2.jpg"
-                },
-                {
-                    id: "s03e07",
-                    name: "42",
-                    image: "https://m.media-amazon.com/images/M/MV5BMTRhMTRkNzYtNDgwMy00MzdmLTlkZWYtNmZiZjA3MmQ1Mzk3XkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"
-                },
-                {
-                    id: "s03e08+9",
-                    name: "Human Nature / The Family of Blood",
-                    image: "https://www.bbc.co.uk/doctorwho/medialibrary/s3/images/1024/s3_09_wal_56.jpg?size=1024&promo=/doctorwho/medialibrary/s3/images/main-promo/s3_09_wal_56.jpg&purpose=Computer%20wallpaper&summary=Original%20homepage.&info=&tag_file_id=s3_09_wal_21"
-                },
-                {
-                    id: "s03e10",
-                    name: "Blink",
-                    image: "https://m.media-amazon.com/images/M/MV5BMmYxZjI2MzEtYWE4My00ZTA3LWIzMDQtZTA2N2VkZmI3ZWRlXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_.jpg"
-                },
-                {
-                    id: "s03e11",
-                    name: "Utopia",
-                    image: "https://i0.wp.com/4.bp.blogspot.com/-ZoDCffnptRU/UkJfddgsjbI/AAAAAAAADKc/334MB-A-Ijo/s1600/3x11-Utopia-doctor-who-20032940-1600-900.jpg"
-                },
-                {
-                    id: "s03e12+13",
-                    name: "The Sound of Drums / Last of the Time Lords",
-                    image: "https://images.mubicdn.net/images/film/291513/cache-633370-1610748032/image-w1280.jpg"
-                },
+                {id: "s03e00", name: "The Runaway Bride", image: "https://pm1.narvii.com/6611/8188836ec7a26134c0e47ccdcc5f35fc092cc2d1_hq.jpg"},
+                {id: "s03e01", name: "Smith and Jones", image: "https://m.media-amazon.com/images/M/MV5BNmI3YWQ3YzgtYmExZC00ZTRkLWFhZDUtYzMyMTVhNDM3ZmNjXkEyXkFqcGdeQXVyNjMyMzczMzY@._V1_.jpg"},
+                {id: "s03e02", name: "The Shakespeare Code", image: "https://m.media-amazon.com/images/M/MV5BMTUwMDg2OTY5MF5BMl5BanBnXkFtZTgwMjczNTMwMjE@._V1_.jpg"},
+                {id: "s03e03", name: "Gridlock", image: "https://m.media-amazon.com/images/M/MV5BMjIyNzgxOTAxN15BMl5BanBnXkFtZTgwNjczNTMwMjE@._V1_.jpg"},
+                {id: "s03e04+5", name: "Daleks in Manhattan / Evolution of the Daleks", image: "https://www.doctorwhotv.co.uk/wp-content/uploads/DaleksInManhattan-ten.jpg"},
+                {id: "s03e06", name: "The Lazarus Experiment", image: "https://www.planetclaire.tv/wp-content/uploads/2007/03/doctor-who-the-lazarus-project_2.jpg"},
+                {id: "s03e07", name: "42", image: "https://m.media-amazon.com/images/M/MV5BMTRhMTRkNzYtNDgwMy00MzdmLTlkZWYtNmZiZjA3MmQ1Mzk3XkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"},
+                {id: "s03e08+9", name: "Human Nature / The Family of Blood", image: "https://www.bbc.co.uk/doctorwho/medialibrary/s3/images/1024/s3_09_wal_56.jpg?size=1024&promo=/doctorwho/medialibrary/s3/images/main-promo/s3_09_wal_56.jpg&purpose=Computer%20wallpaper&summary=Original%20homepage.&info=&tag_file_id=s3_09_wal_21"},
+                {id: "s03e10", name: "Blink", image: "https://m.media-amazon.com/images/M/MV5BMmYxZjI2MzEtYWE4My00ZTA3LWIzMDQtZTA2N2VkZmI3ZWRlXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_.jpg"},
+                {id: "s03e11", name: "Utopia", image: "https://i0.wp.com/4.bp.blogspot.com/-ZoDCffnptRU/UkJfddgsjbI/AAAAAAAADKc/334MB-A-Ijo/s1600/3x11-Utopia-doctor-who-20032940-1600-900.jpg"},
+                {id: "s03e12+13", name: "The Sound of Drums / Last of the Time Lords", image: "https://images.mubicdn.net/images/film/291513/cache-633370-1610748032/image-w1280.jpg"},
 
                 /* SEASON 4 */
-                {
-                    id: "s04e00",
-                    name: "Voyage of the Damned",
-                    image: "https://ichef.bbci.co.uk/images/ic/1200x675/p00t000x.jpg"
-                },
-                {
-                    id: "s04e01",
-                    name: "Partners in Crime",
-                    image: "https://images.squarespace-cdn.com/content/v1/5baab7130cf57de87fcfe634/1557686288976-Q8QTMJPGX74P4TJQ3XC6/adipose.jpg"
-                },
-                {
-                    id: "s04e02",
-                    name: "The Fires of Pompeii",
-                    image: "https://firebreathingdimetrodon.files.wordpress.com/2020/06/who0402.jpg"
-                },
-                {
-                    id: "s04e03",
-                    name: "Planet of the Ood",
-                    image: "https://static.wikia.nocookie.net/tardis/images/0/0c/Ood_in_container.jpg/revision/latest/scale-to-width-down/624?cb=20090722202208"
-                },
-                {
-                    id: "s04e04+5",
-                    name: "The Sontaran Stratagem / The Poison Sky",
-                    image: "https://ichef.bbci.co.uk/images/ic/640x360/p01g3llm.jpg"
-                },
-                {
-                    id: "s04e06",
-                    name: "The Doctor's Daughter",
-                    image: "https://static.wikia.nocookie.net/tardis/images/c/c3/The_Doctor%27s_Daughter_%28TV_story%29.jpg/revision/latest?cb=20201025204556"
-                },
-                {
-                    id: "s04e07",
-                    name: "The Unicorn and the Wasp",
-                    image: "https://2.bp.blogspot.com/-1PiM8ueO0C4/VztozVJQwFI/AAAAAAAAXtM/JCj-1gugsGM-rUfr33YLCqPOZdUZkTcxACLcB/s640/unicorn%2B1.jpg"
-                },
-                {
-                    id: "s04e08+9",
-                    name: "Silence in the Library / Forest of the Dead",
-                    image: "https://m.media-amazon.com/images/M/MV5BNTRlMWZjOGUtZDY1Mi00MDk2LWJlYjUtMjlkMzZiNWZmYzQzXkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"
-                },
-                {
-                    id: "s04e10",
-                    name: "Midnight",
-                    image: "https://m.media-amazon.com/images/M/MV5BYjhjMGZiNmQtNWU2OS00ZjY3LTkyMWYtOGRmNDFhZGJlMDg3XkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"
-                },
-                {
-                    id: "s04e11",
-                    name: "Turn Left",
-                    image: "https://static.wikia.nocookie.net/tardis/images/1/18/DonnaReflected.jpg/revision/latest/scale-to-width-down/624?cb=20160624203837"
-                },
-                {
-                    id: "s04e12+13",
-                    name: "The Stolen Earth / Journey's End",
-                    image: "https://static.wikia.nocookie.net/tardis/images/a/af/122.jpg/revision/latest?cb=20091101215459"
-                },
-                {
-                    id: "s04x01",
-                    name: "The Next Doctor",
-                    image: "https://ichef.bbci.co.uk/images/ic/1200x675/p069jb3n.jpg"
-                },
-                {
-                    id: "s04x02",
-                    name: "Planet of the Dead",
-                    image: "https://m.media-amazon.com/images/M/MV5BNTUxMTM0OTkxM15BMl5BanBnXkFtZTgwNDk5Nzk5MTE@._V1_.jpg"
-                },
-                {
-                    id: "s04x03",
-                    name: "The Waters of Mars",
-                    image: "https://thecoolkat1995.files.wordpress.com/2020/10/doctor-who-the-waters-of-mars-the-flood-3.png"
-                },
-                {
-                    id: "s04x04+5",
-                    name: "The End of Time",
-                    image: "https://ichef.bbci.co.uk/images/ic/640x360/p05pbw8y.jpg"
-                },
+                {id: "s04e00", name: "Voyage of the Damned", image: "https://ichef.bbci.co.uk/images/ic/1200x675/p00t000x.jpg"},
+                {id: "s04e01", name: "Partners in Crime", image: "https://images.squarespace-cdn.com/content/v1/5baab7130cf57de87fcfe634/1557686288976-Q8QTMJPGX74P4TJQ3XC6/adipose.jpg"},
+                {id: "s04e02", name: "The Fires of Pompeii", image: "https://firebreathingdimetrodon.files.wordpress.com/2020/06/who0402.jpg"},
+                {id: "s04e03", name: "Planet of the Ood", image: "https://static.wikia.nocookie.net/tardis/images/0/0c/Ood_in_container.jpg/revision/latest/scale-to-width-down/624?cb=20090722202208"},
+                {id: "s04e04+5", name: "The Sontaran Stratagem / The Poison Sky", image: "https://ichef.bbci.co.uk/images/ic/640x360/p01g3llm.jpg"},
+                {id: "s04e06", name: "The Doctor's Daughter", image: "https://static.wikia.nocookie.net/tardis/images/c/c3/The_Doctor%27s_Daughter_%28TV_story%29.jpg/revision/latest?cb=20201025204556"},
+                {id: "s04e07", name: "The Unicorn and the Wasp", image: "https://2.bp.blogspot.com/-1PiM8ueO0C4/VztozVJQwFI/AAAAAAAAXtM/JCj-1gugsGM-rUfr33YLCqPOZdUZkTcxACLcB/s640/unicorn%2B1.jpg"},
+                {id: "s04e08+9", name: "Silence in the Library / Forest of the Dead", image: "https://m.media-amazon.com/images/M/MV5BNTRlMWZjOGUtZDY1Mi00MDk2LWJlYjUtMjlkMzZiNWZmYzQzXkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"},
+                {id: "s04e10", name: "Midnight", image: "https://m.media-amazon.com/images/M/MV5BYjhjMGZiNmQtNWU2OS00ZjY3LTkyMWYtOGRmNDFhZGJlMDg3XkEyXkFqcGdeQXVyODc5MTI0NjU@._V1_.jpg"},
+                {id: "s04e11", name: "Turn Left", image: "https://static.wikia.nocookie.net/tardis/images/1/18/DonnaReflected.jpg/revision/latest/scale-to-width-down/624?cb=20160624203837"},
+                {id: "s04e12+13", name: "The Stolen Earth / Journey's End", image: "https://static.wikia.nocookie.net/tardis/images/a/af/122.jpg/revision/latest?cb=20091101215459"},
+                {id: "s04x01", name: "The Next Doctor", image: "https://ichef.bbci.co.uk/images/ic/1200x675/p069jb3n.jpg"},
+                {id: "s04x02", name: "Planet of the Dead", image: "https://m.media-amazon.com/images/M/MV5BNTUxMTM0OTkxM15BMl5BanBnXkFtZTgwNDk5Nzk5MTE@._V1_.jpg"},
+                {id: "s04x03", name: "The Waters of Mars", image: "https://thecoolkat1995.files.wordpress.com/2020/10/doctor-who-the-waters-of-mars-the-flood-3.png"},
+                {id: "s04x04+5", name: "The End of Time", image: "https://ichef.bbci.co.uk/images/ic/640x360/p05pbw8y.jpg"},
             ];
+            //@formatter:on
 
             var myPicker = new picker.Picker({
                 items: items,
