@@ -243,6 +243,22 @@
                     <button id="undo">Undo</button>
                     <button id="redo">Redo</button>
                 </p>
+                <label>Seasons:</label><br>
+                <label><input class="seasons" type="checkbox" value="1">1</label><br>
+                <label><input class="seasons" type="checkbox" value="2">2</label><br>
+                <label><input class="seasons" type="checkbox" value="3">3</label><br>
+                <label><input class="seasons" type="checkbox" value="4">4</label><br><br>
+
+                <label>Doctors (not counting regeneration scenes / cameos):</label><br>
+                <label><input class="doctors" type="checkbox" value="9">9</label><br>
+                <label><input class="doctors" type="checkbox" value="10">10</label><br>
+                <label><input class="doctors" type="checkbox" value="11">11</label><br>
+                <label><input class="doctors" type="checkbox" value="12">12</label><br>
+                <label><input class="doctors" type="checkbox" value="13">13</label><br><br>
+
+                <label>Episode Types:</label><br>
+                <label><input id="normal-episodes" type="checkbox">Normal Episodes</label><br>
+                <label><input id="specials" type="checkbox">Specials</label>
             </div>
 
             <div id="secondary">
@@ -320,7 +336,53 @@
 
             var myPicker = new picker.Picker({
                 items: items,
-                localStorageKey: 'picker-state'
+                localStorageKey: 'picker-state',
+                defaultSettings: {
+                    doctors: ['9', '10', '11', '12', '13'],
+                    seasons: ['1', '2', '3', '4', '5'],
+                    normalEpisodes: true,
+                    specials: true,
+                },
+                shouldIncludeItem: function (item, settings) {
+                    // Include only if:
+                    // 1. the character's role is in the list of roles we've checked, and
+                    // 2. we haven't checked the "recurring only" box, or the character is a recurring character.
+                    let season = item.id.substring(1, 3).replace(/^0+/, "");
+                    let isSpecial = item.id.substring(4, 6) === "00" || item.id.substring(3, 4) === "x";
+
+                    /* doctor check */
+                    let doctorsInEpisode = "guestDoctors" in item ? item.guestDoctors : [];
+                    switch (season) {
+                        case "1":
+                            doctorsInEpisode.push("9");
+                            break;
+                        case "2":
+                        case "3":
+                        case "4":
+                            doctorsInEpisode.push("10");
+                            break;
+                        case "5":
+                        case "6":
+                        case "7":
+                            doctorsInEpisode.push("11");
+                            break;
+                        case "8":
+                        case "9":
+                        case "10":
+                            doctorsInEpisode.push("12");
+                            break;
+                        case "11":
+                        case "12":
+                        case "13":
+                            doctorsInEpisode.push("13");
+                            break;
+                    }
+                    //console.log(item.id + ": " + doctorsInEpisode)
+                    //console.log(season);
+                    return settings.seasons.includes(season) &&
+                        (isSpecial ? settings.specials : settings.normalEpisodes) &&
+                        doctorsInEpisode.every(doctor => settings.doctors.includes(doctor));
+                }
             });
 
             var pickerUI = new PickerUI(myPicker, {
@@ -330,7 +392,13 @@
                     undo: "#undo",
                     redo: "#redo",
                     evaluating: "#evaluating",
-                    favorites: "#favorites"
+                    favorites: "#favorites",
+                    settings: {
+                        doctors: '.doctors',
+                        seasons: '.seasons',
+                        normalEpisodes: '#normal-episodes',
+                        specials: '#specials'
+                    }
                 }
             });
 
